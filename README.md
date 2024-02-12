@@ -13,24 +13,58 @@ The application is divided into two main modules:
 
 This module handles user authentication, secure file uploading, and the initial processing of files to extract text.
 
-### API Endpoints
+### API Endpoints and Functions
 
-- **POST /api/auth/login**: Authenticate users and issue a session token.
-- **POST /api/files/upload**: Securely upload a document. Requires a session token.
-- **GET /api/files/{fileId}/text**: Retrieve text from an uploaded document.
+- **POST /api/auth/login**
+  - Authenticates users and issues a session token.
+  - **Parameters**: `username`, `password`
+  - **Returns**: Session token if authentication is successful.
+
+- **POST /api/files/upload**
+  - Allows secure uploading of a document. Supports PDF, images, CSV, DOC, etc.
+  - **Parameters**: `file` (multipart/form-data), `sessionToken`
+  - **Returns**: File ID and confirmation of upload.
+
+- **GET /api/files/{fileId}/text**
+  - Retrieves text extracted from the uploaded document.
+  - **Parameters**: `fileId`, `sessionToken`
+  - **Returns**: Extracted text content.
 
 ## Text NLP Analysis
 
 Performs deep text analysis, including keyword tagging, sentiment analysis, topic detection, and summarization.
 
-### API Endpoints
+### API Endpoints and Functions
 
-- **POST /api/analysis/keywords**: Extract keywords and topics from text.
-- **POST /api/analysis/sentiments**: Analyze sentiment of text segments.
-- **GET /api/analysis/search**: Search documents based on keywords, with optional sentiment or topic filters.
-- **POST /api/analysis/summaries**: Generate text summaries.
-- **POST /api/analysis/enrichment**: Discover related web content based on keywords.
-- **POST /api/analysis/entities**: Identify names, locations, and other entities in text.
+- **POST /api/analysis/keywords**
+  - Extracts keywords and topics from provided text or document ID.
+  - **Parameters**: `text` or `documentId`, `sessionToken`
+  - **Returns**: List of keywords and topics.
+
+- **POST /api/analysis/sentiments**
+  - Determines the sentiment (positive, neutral, negative) of sentences or paragraphs.
+  - **Parameters**: `text` or `documentId`, `sessionToken`
+  - **Returns**: Sentiment analysis results.
+
+- **GET /api/analysis/search**
+  - Searches documents or paragraphs based on keywords, with optional sentiment or topic filters.
+  - **Parameters**: `keyword`, `sentiment`, `topic`, `sessionToken`
+  - **Returns**: List of matching documents or text segments.
+
+- **POST /api/analysis/summaries**
+  - Generates a summary for a given document.
+  - **Parameters**: `documentId`, `sessionToken`
+  - **Returns**: Document summary.
+
+- **POST /api/analysis/enrichment**
+  - Discovers additional web content related to document's keywords.
+  - **Parameters**: `keywords`, `sessionToken`
+  - **Returns**: Links to related content.
+
+- **POST /api/analysis/entities**
+  - Identifies and extracts names, locations, institutions, and addresses.
+  - **Parameters**: `text` or `documentId`, `sessionToken`
+  - **Returns**: List of identified entities.
 
 ## Implementation Notes
 
@@ -40,18 +74,5 @@ Performs deep text analysis, including keyword tagging, sentiment analysis, topi
 - **NLP Tools**: Integration with NLP libraries or services like Apache OpenNLP, Stanford NLP, or OpenAI is essential for text analysis.
 - **File Conversion**: Apache PDFBox and Tesseract OCR are suggested for handling PDFs and image-based text extraction.
 
-## Development
-
-Ensure to follow best practices for software development, including writing unit and integration tests to maintain code quality and functionality.
-
-## Contribution
-
-Contributions are welcome. Please submit pull requests or create issues for bugs and feature requests.
-
-## License
-
-[Specify License]
-
----
 
 This project aims to provide a comprehensive solution for document analysis, leveraging the latest in secure file handling and NLP technologies.
