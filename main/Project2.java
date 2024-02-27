@@ -3,7 +3,7 @@ package com.example.ec530;
 import java.util.Objects;
 
 /**
- * EC530 SP23
+ * EC530 SP24
  * Bolun Liu
  * Project2 Phase1
  * Implement a stub-API using actions and unit test
